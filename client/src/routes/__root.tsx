@@ -2,11 +2,15 @@ import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
-import Header from '../components/Header'
-
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
 import type { QueryClient } from '@tanstack/react-query'
+import { ClerkProvider } from '@clerk/clerk-react'
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+
+if (!PUBLISHABLE_KEY) {
+  throw new Error('Missing Publishable Key')
+}
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -15,8 +19,9 @@ interface MyRouterContext {
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: () => (
     <>
-      <Header />
-      <Outlet />
+      <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+        <Outlet />
+      </ClerkProvider>
       <TanStackDevtools
         config={{
           position: 'bottom-right',
@@ -32,3 +37,5 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     </>
   ),
 })
+
+
