@@ -2,19 +2,34 @@ import express from 'express';
 import cors from 'cors';
 import { ENV } from './config/env.js';
 import 'dotenv/config';
-import { drizzle } from 'drizzle-orm/libsql';
+import { clerkMiddleware } from '@clerk/express';
+import { inngest, functions } from "./src/config/inngest.js";
+import { serve } from "inngest/express";
 
-// You can specify any property from the libsql connection options
-const db = drizzle({ 
-  connection: { 
-    url: ENV.TURSO_DATABASE_URL, 
-    authToken: ENV.TURSO_AUTH_TOKEN
-  }
-});
+app.use(cors());
+app.use(express.json());
+app.use(clerkMiddleware({ apiKey: ENV.CLERK_API_KEY }));
 
 const app = express();
+
+app.use("/api/inngest", serve({ client: inngest, functions }));
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
-app.listen(ENV.PORT, () => console.log(`Server is running on port ${ENV.PORT}`));
+
+
+const startServer = async () => {
+  try {
+    if (ENV.NODE_ENV !== 'production') {
+      app.listen(ENV.PORT, () => console.log(`Server is running on port ${ENV.PORT}`));
+    }
+  } catch (error) {
+    console.error('Error starting server:', error);
+    process.exit(1);
+  }
+};
+
+startServer();
+
+export default app;
