@@ -1,5 +1,5 @@
 import { Inngest } from "inngest";
-import db from "./db";
+import db from "./db.js";
 
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "stack-clone" });
