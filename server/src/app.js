@@ -9,7 +9,13 @@ import { serve } from "inngest/express";
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(clerkMiddleware({ apiKey: ENV.CLERK_API_KEY }));
+// Clerk middleware requires a server API key / secret. If not provided we skip
+// the middleware to allow local development without failing startup.
+if (ENV.CLERK_SECRET_KEY) {
+  app.use(clerkMiddleware({ apiKey: ENV.CLERK_SECRET_KEY }));
+} else {
+  console.warn('CLERK_SECRET_KEY not set; skipping clerk middleware');
+}
 
 
 
