@@ -1,0 +1,8 @@
+# slack_clone/.gitignore
+/client/node_modules/
+/client/dist/
+/server/node_modules/
+/server/build/
+/server/.env
+/server/database.db
+/server/package-lock.json
