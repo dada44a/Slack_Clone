@@ -6,7 +6,7 @@ export const inngest = new Inngest({ id: "stack-clone" });
 
 const syncUser = inngest.createFunction(
     { id: "sync-user" },
-    { event: "clerk/user.created" },
+    { event: "user.created" },
     async ({ event }) => {
         const database = db;
         const { id, email_addresses, first_name, image_url, created_at, updated_at } = event.data;
@@ -31,7 +31,7 @@ const syncUser = inngest.createFunction(
 
 const deleteUser = inngest.createFunction(
     { id: "delete-user" },
-    { event: "clerk/user.deleted" },
+    { event: "user.deleted" },
     async ({ event }) => {
         const database = db;
         const { id } = event.data;
