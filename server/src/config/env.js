@@ -1,0 +1,15 @@
+import "dotenv/config";
+
+export const ENV ={
+    PORT: process.env.PORT || 5000,
+    NODE_ENV: process.env.NODE_ENV || 'development',
+    TURSO_DATABASE_URL: process.env.TURSO_DATABASE_URL,
+    TURSO_AUTH_TOKEN: process.env.TURSO_AUTH_TOKEN,
+    CLERK_PUBLISHABLE_KEY: process.env.CLERK_PUBLISHABLE_KEY,
+    CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
+    STREAM_API_KEY: process.env.STREAM_API_KEY,
+    STREAM_API_SECRET: process.env.STREAM_API_SECRET,
+    SENTRY_DSN: process.env.SENTRY_DSN,
+    INGEST_EVENT_KEY: process.env.INGEST_EVENT_KEY,
+    INGEST_SIGNING_KEY: process.env.INGEST_SIGNING_KEY,
+}
