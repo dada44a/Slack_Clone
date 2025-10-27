@@ -6,11 +6,12 @@ import { clerkMiddleware } from '@clerk/express';
 import { inngest, functions } from "./config/ingest.js";
 import { serve } from "inngest/express";
 
+const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(clerkMiddleware({ apiKey: ENV.CLERK_API_KEY }));
 
-const app = express();
+
 
 app.use("/api/inngest", serve({ client: inngest, functions }));
 
